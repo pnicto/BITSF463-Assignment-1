@@ -134,6 +134,11 @@ func TestPlayFair(t *testing.T) {
 			plainText: "HIDETHEGOLDINTHETREESTUMP",
 			expected:  "BMODZBXDNABEKUDMUIXMMOUVIF",
 		},
+		{
+			key:       "TRICIPHER",
+			plainText: "TESTCODE",
+			expected:  "RHNCRSHA",
+		},
 	}
 	for _, tC := range testCases {
 		t.Run("Playfair", func(t *testing.T) {
