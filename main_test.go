@@ -118,6 +118,59 @@ func TestQ3(t *testing.T) {
 	}
 }
 
+func TestPlayFair(t *testing.T) {
+	testCases := []struct {
+		key       string
+		plainText string
+		expected  string
+	}{
+		{
+			key:       "PLAYFAIREXAMPLE",
+			plainText: "HIDETHEGOLD",
+			expected:  "BMODZBXDNAGE",
+		},
+		{
+			key:       "PLAYFAIREXAMPLE",
+			plainText: "HIDETHEGOLDINTHETREESTUMP",
+			expected:  "BMODZBXDNABEKUDMUIXMMOUVIF",
+		},
+	}
+	for _, tC := range testCases {
+		t.Run("Playfair", func(t *testing.T) {
+			encrypted := PlayFairCipher(tC.key, tC.plainText)
+			if encrypted != tC.expected {
+				t.Errorf("received %s, wanted %s", encrypted, tC.expected)
+			}
+		})
+	}
+}
+
+func TestVigenere(t *testing.T) {
+	testCases := []struct {
+		key       string
+		plainText string
+		expected  string
+	}{
+		{
+			key:       "LEMON",
+			plainText: "ATTACKATDAWN",
+			expected:  "LXFOPVEFRNHR",
+		},
+		{
+			key:       "CRYPTII",
+			plainText: "THEQUICKBROWNFOXJUMPSOVERLAZYDOGS",
+			expected:  "VYCFNQKMSPDPVNQOHJFXAQMCGEIHAUMVL",
+		},
+	}
+	for _, tC := range testCases {
+		t.Run("Vigenere", func(t *testing.T) {
+			encrypted := VigenereCipher(tC.key, tC.plainText)
+			if encrypted != tC.expected {
+				t.Errorf("received %s, wanted %s", encrypted, tC.expected)
+			}
+		})
+	}
+}
 
 func TestColumnarTransposition(t *testing.T) {
 	testCases := []struct {
