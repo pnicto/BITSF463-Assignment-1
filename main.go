@@ -3,6 +3,6 @@ package main
 import "fmt"
 
 func main() {
-	keyword, permutation, plainText := modifiedAdfgvxInput()
-	fmt.Println(modifiedAdfgvxCipher("GRAPHY", "CRYPTO", permutation, plainText, keyword))
+	straddlingKey, num1, num2, cipherText, rails := Q3Input()
+	fmt.Println(Q3(straddlingKey, num1, num2, cipherText, rails))
 }
