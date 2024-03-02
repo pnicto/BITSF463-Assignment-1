@@ -208,3 +208,115 @@ func TestColumnarTransposition(t *testing.T) {
 		})
 	}
 }
+
+func TestPlayFairDecryption(t *testing.T) {
+	testCases := []struct {
+		key        string
+		cipherText string
+		expected   string
+	}{
+		{
+			key:        "PLAYFAIREXAMPLE",
+			cipherText: "BMODZBXDNAGE",
+			expected:   "HIDETHEGOLDX",
+		},
+	}
+	for _, tC := range testCases {
+		t.Run("Playfair Decryption", func(t *testing.T) {
+			decrypted := PlayFairDecryption(tC.key, tC.cipherText)
+			if decrypted != tC.expected {
+				t.Errorf("received %s, wanted %s", decrypted, tC.expected)
+			}
+		})
+	}
+}
+
+func TestVigenereDecryption(t *testing.T) {
+	testCases := []struct {
+		key        string
+		cipherText string
+		expected   string
+	}{
+		{
+			key:        "LEMON",
+			cipherText: "LXFOPVEFRNHR",
+			expected:   "ATTACKATDAWN",
+		},
+		{
+			key:        "KEY",
+			cipherText: "NGMNIAKRBOGPITRFMEORCBIUSXFYYRUIW",
+			expected:   "DCODECANDECRYPTVIGENEREWITHOUTKEY",
+		},
+	}
+	for _, tC := range testCases {
+		t.Run("Vigenere Decryption", func(t *testing.T) {
+			decrypted := VigenereDecryption(tC.key, tC.cipherText)
+			if decrypted != tC.expected {
+				t.Errorf("received %s, wanted %s", decrypted, tC.expected)
+			}
+		})
+	}
+}
+
+func TestColumnarDecryption(t *testing.T) {
+	testCases := []struct {
+		key        string
+		cipherText string
+		expected   string
+	}{
+		{
+			key:        "YYAS",
+			cipherText: "AOIXNSOXTSINRPTX",
+			expected:   "TRANSPOSITION",
+		},
+		{
+			key:        "FI",
+			expected:   "WEHAVEBEENFOUNDESCAPE",
+			cipherText: "WHVBEFUDSAEEAEENONECPX",
+		},
+		{
+			key:        "FOOUR",
+			expected:   "WEHAVEBEENFOUNDESCAPE",
+			cipherText: "WEFEEEBOSXHEUCXVNDPXAENAX",
+		},
+		{
+			key:        "FOURTH",
+			expected:   "WEHAVEBEENFOUNDESCAPE",
+			cipherText: "WBUAEOCXEENPANEXVFSXHEDE",
+		},
+	}
+	for _, tC := range testCases {
+		t.Run("Columnar Decryption", func(t *testing.T) {
+			decrypted := ColumnarDecryption(tC.key, tC.cipherText)
+			if decrypted != tC.expected {
+				t.Errorf("received %s, wanted %s", decrypted, tC.expected)
+			}
+		})
+	}
+}
+
+func TestCrypticConnection(t *testing.T) {
+	testCases := []struct {
+		playfairKey string
+		vigenerKey  string
+		columnarKey string
+		cipherText  string
+		expected    string
+	}{
+		{
+			"TRICIPHER",
+			"CODEHELP",
+			"FINAL",
+			"GXTWVSYXQP",
+			"TESTCODE",
+		},
+	}
+	for _, tC := range testCases {
+		t.Run("Q4", func(t *testing.T) {
+			decrypted := CrypticConnection(tC.playfairKey, tC.vigenerKey, tC.columnarKey, tC.cipherText)
+			if decrypted != tC.expected {
+				t.Errorf("received %s, wanted %s", decrypted, tC.expected)
+			}
+		})
+	}
+}
