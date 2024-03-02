@@ -38,6 +38,86 @@ func TestAdfgvx(t *testing.T) {
 	}
 }
 
+func TestRailFenceDecryption(t *testing.T) {
+	testCases := []struct {
+		cipherText string
+		expected   string
+		rails      int
+	}{
+		{
+			rails:      3,
+			cipherText: "EPWSAEOCN",
+			expected:   "ESCAPENOW",
+		},
+		{
+			rails:      4,
+			cipherText: "ENSEOCPWA",
+			expected:   "ESCAPENOW",
+		},
+	}
+	for _, tC := range testCases {
+		t.Run("Rail Fence", func(t *testing.T) {
+			decoded := RailFenceDecryption(tC.rails, tC.cipherText)
+			if decoded != tC.expected {
+				t.Errorf("received %s, wanted %s", decoded, tC.expected)
+			}
+		})
+	}
+}
+
+func TestStraddlingCheckerboardDecryption(t *testing.T) {
+	testCases := []struct {
+		straddlingKey string
+		expected      string
+		cipherText    string
+		num1          int
+		num2          int
+	}{
+		{
+			straddlingKey: "FKMCPDYEHBIGQROSAZLUTJNWVX",
+			cipherText:    "690974672309938377275387070360723094383772709",
+			num1:          3,
+			num2:          7,
+			expected:      "DEFENDTHEEASTWALLOFTHECASTLE",
+		},
+	}
+	for _, tC := range testCases {
+		t.Run("Straddling Checkerboard", func(t *testing.T) {
+			decoded := StraddlingCheckerboardDecryption(tC.straddlingKey, tC.cipherText, tC.num1, tC.num2)
+			if decoded != tC.expected {
+				t.Errorf("received %s, wanted %s", decoded, tC.expected)
+			}
+		})
+	}
+}
+
+func TestQ3(t *testing.T) {
+	testCases := []struct {
+		straddlingKey string
+		expected      string
+		cipherText    string
+		num1          int
+		num2          int
+		rails         int
+	}{
+		{
+			straddlingKey: "XZDECAMRQKUYBLFOGVITWJHPSN",
+			num1:          2, num2: 7,
+			cipherText: "377767272277661122967521077712672277",
+			rails:      3,
+			expected:   "DONTASKTAFORSOLUTION",
+		},
+	}
+	for _, tC := range testCases {
+		t.Run("Q3", func(t *testing.T) {
+			decoded := Q3(tC.straddlingKey, tC.num1, tC.num2, tC.cipherText, tC.rails)
+			if decoded != tC.expected {
+				t.Errorf("received %s, wanted %s", decoded, tC.expected)
+			}
+		})
+	}
+}
+
 
 func TestColumnarTransposition(t *testing.T) {
 	testCases := []struct {
